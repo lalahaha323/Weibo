@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px
+}
+
+li,td {Arial, Helvetica, sans-serif;
+    font-size: 13px
+}
+
+hr {
+    color: brown;
+    width: 300;
+    text-align: left
+}
+
+a {
+    color: brown;
+}
+
+#loginPanel {
+    width: 250px;
+    float :left;
+}
