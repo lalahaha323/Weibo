@@ -19,6 +19,8 @@ public class Login extends HttpServlet {
         if(checkLogin(username, password)) {
             request.getRequestDispatcher(SUCCESS_VIEW)
                     .forward(request, response);
+        }else {
+            response.sendRedirect(ERROR_VIEW);
         }
     }
     private boolean checkLogin(String username, String password) throws IOException {
