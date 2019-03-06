@@ -34,11 +34,11 @@ public class Register extends HttpServlet {
         }
 
         String resultPage = ERROR_VIEW;
-        if(!errors.isEmpty()) {
-            request.setAttribute("errors", errors);
-        } else {
+        if(errors.isEmpty()) {
             resultPage = SUCCESS_VIEW;
             createUserData(email, username, password);
+        } else {
+            request.setAttribute("errors", errors);
         }
         request.getRequestDispatcher(resultPage)
                 .forward(request, response);
