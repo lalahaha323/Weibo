@@ -51,8 +51,9 @@ public class Member extends HttpServlet {
         if(blabla == null) {
             blabla = "";
         } else {
-            out.println("<textarea cols='60' rows='4' name='blabla'>" + blabla + "</textarea>");
+            out.println("讯息要140字以内");
         }
+        out.println("<textarea cols='60' rows='4' name='blabla'>" + blabla + "</textarea>");
         out.println("<br>");
         out.println("<button type='submit'>送出</button>");
         out.println("</form>");
