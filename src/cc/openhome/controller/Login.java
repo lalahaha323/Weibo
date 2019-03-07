@@ -16,12 +16,12 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String page = ERROR_VIEW;
         if(checkLogin(username, password)) {
-            request.getRequestDispatcher(SUCCESS_VIEW)
-                    .forward(request, response);
-        }else {
-            response.sendRedirect(ERROR_VIEW);
+            request.getSession().setAttribute("login", username);
+            page = SUCCESS_VIEW;
         }
+        response.sendRedirect(page);
     }
     private boolean checkLogin(String username, String password) throws IOException {
         if(username != null && password != null) {
