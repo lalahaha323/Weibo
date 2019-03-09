@@ -34,7 +34,6 @@ public class Register extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmedPasswd = request.getParameter("confirmedPasswd");
-
         UserService userService = (UserService) getServletContext().getAttribute("userService");
 
         List<String> errors = new ArrayList<String>();
@@ -54,6 +53,7 @@ public class Register extends HttpServlet {
             resultPage = SUCCESS_VIEW;
             userService.createUserData(email, username, password);
         }
+        System.out.println("ok!");
         request.getRequestDispatcher(resultPage).forward(request, response);
     }
     private boolean isInvalidEmail(String email) {

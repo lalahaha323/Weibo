@@ -18,12 +18,12 @@ import java.util.TreeMap;
 
 public class UserService {
     private String USERS;
-
     public UserService(String USERS) {
         this.USERS = USERS;
     }
     public boolean isInvalidUsername(String username) {
         for(String file : new File(USERS).list()) {
+            System.out.println(file);
             if(file.equals(username)) {
                 return true;
             }
