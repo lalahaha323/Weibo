@@ -6,21 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@page pageEncoding="UTF-8" import="java.util.*" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gossip 微网志</title>
 </head>
 <body>
-    <c:if test="${requestScope.errors != null}">
-        <h1>新增会员失败</h1>
-        <ul style='color: rgb(255, 0, 0);'>
-            <c:forEach var="error" items="${requestScope.errors}">
-                <li>${error}</li>
-            </c:forEach>
-        </ul><br>
-    </c:if>
+<%
+    List<String> errors = (List<String>) request.getAttribute("errors");
+    if(errors != null) {
+%>
+    <h1>新增会员失败</h1>
+    <ul style='color: rgb(255, 0, 0);'>
+<%
+    for(String error : errors) {
+%>
+    <li><%= error %></li>
+<%
+    }
+%>
+    </ul><br>
+    <%
+        }
+    %>
     <h1>会员注册</h1>
     <form method='post' action='register.do'>
         <table bgcolor=#cccccc>

@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
             page = SUCCESS_VIEW;
         }
         else {
-            request.setAttribute("error", "名稱或密碼錯誤");
+            request.setAttribute("error", "名称或密码错误");
             page = ERROR_VIEW;
         }
         request.getRequestDispatcher(page).forward(request, response);
