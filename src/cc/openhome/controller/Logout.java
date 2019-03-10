@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(
         urlPatterns={"/logout.do"},
         initParams={
-                @WebInitParam(name = "LOGIN_VIEW", value = "index.html")
+                @WebInitParam(name = "LOGIN_VIEW", value = "index.jsp")
         }
 )
 public class Logout extends HttpServlet {
@@ -25,7 +25,9 @@ public class Logout extends HttpServlet {
         LOGIN_VIEW = getServletConfig().getInitParameter("LOGIN_VIEW");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws ServletException, IOException {
         request.getSession().invalidate();
         response.sendRedirect(LOGIN_VIEW);
     }

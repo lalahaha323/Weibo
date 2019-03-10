@@ -15,8 +15,8 @@ import cc.openhome.model.UserService;
 @WebServlet(
         urlPatterns={"/register.do"},
         initParams={
-                @WebInitParam(name = "SUCCESS_VIEW", value = "success.view"),
-                @WebInitParam(name = "ERROR_VIEW", value = "error.view")
+                @WebInitParam(name = "SUCCESS_VIEW", value = "success.jsp"),
+                @WebInitParam(name = "ERROR_VIEW", value = "register.jsp")
         }
 )
 public class Register extends HttpServlet {
@@ -29,11 +29,14 @@ public class Register extends HttpServlet {
         ERROR_VIEW = getServletConfig().getInitParameter("ERROR_VIEW");
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmedPasswd = request.getParameter("confirmedPasswd");
+
         UserService userService = (UserService) getServletContext().getAttribute("userService");
 
         List<String> errors = new ArrayList<String>();
@@ -44,7 +47,7 @@ public class Register extends HttpServlet {
             errors.add("使用者名称为空或已存在");
         }
         if (isInvalidPassword(password, confirmedPasswd)) {
-            errors.add("请确认密码符合格式并再度确认密码");
+            errors.add("请确认密码格式并再度确认密码");
         }
         String resultPage = ERROR_VIEW;
         if (!errors.isEmpty()) {
@@ -53,17 +56,18 @@ public class Register extends HttpServlet {
             resultPage = SUCCESS_VIEW;
             userService.createUserData(email, username, password);
         }
-        System.out.println("ok!");
+
         request.getRequestDispatcher(resultPage).forward(request, response);
     }
+
     private boolean isInvalidEmail(String email) {
         return email == null
                 || !email.matches("^[_a-z0-9-]+([.]"
                 + "[_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$");
     }
+
     private boolean isInvalidPassword(String password, String confirmedPasswd) {
         return password == null || password.length() < 6
                 || password.length() > 16 || !password.equals(confirmedPasswd);
     }
-
 }

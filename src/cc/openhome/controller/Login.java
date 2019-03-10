@@ -15,14 +15,13 @@ import cc.openhome.model.UserService;
 @WebServlet(
         urlPatterns={"/login.do"},
         initParams={
-                @WebInitParam(name = "SUCCESS_VIEW", value = "member.view"),
-                @WebInitParam(name = "ERROR_VIEW", value = "index.html")
+                @WebInitParam(name = "SUCCESS_VIEW", value = "message.do"),
+                @WebInitParam(name = "ERROR_VIEW", value = "index.jsp")
         }
 )
 public class Login extends HttpServlet {
     private String SUCCESS_VIEW;
     private String ERROR_VIEW;
-
 
     @Override
     public void init() throws ServletException {
@@ -30,17 +29,23 @@ public class Login extends HttpServlet {
         ERROR_VIEW = getServletConfig().getInitParameter("ERROR_VIEW");
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String page = ERROR_VIEW;
+
+        String page;
 
         UserService userService = (UserService) getServletContext().getAttribute("userService");
         if(userService.checkLogin(username, password)) {
             request.getSession().setAttribute("login", username);
             page = SUCCESS_VIEW;
         }
-        response.sendRedirect(page);
+        else {
+            request.setAttribute("error", "名稱或密碼錯誤");
+            page = ERROR_VIEW;
+        }
+        request.getRequestDispatcher(page).forward(request, response);
     }
-
 }
